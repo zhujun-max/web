@@ -1,0 +1,4 @@
+index.html 动态背景图，单页面， ，图片来自img，音乐来自mp3，原内容是调用的assets的
+子页面组件html  文章阅读区域，后面换成vue组件，css就是
+根目录img和style.css是博客的ziyem.html的内容
+后台文件，还没有动，

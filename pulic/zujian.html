@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>XIAO ZHU'S BLOG</title>
+	<!-- 页面css样式 -->
+	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+	<!-- 代码块,js高亮，css文本颜色 -->
+	<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.15.10/styles/monokai-sublime.min.css"/>
+	<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<!-- 行号插件 -->
+	<script src="https://cdn.bootcss.com/highlightjs-line-numbers.js/2.7.0/highlightjs-line-numbers.min.js"></script>
+	<script>hljs.initLineNumbersOnLoad();</script>
+	<!-- 代码块复制 -->
+	<script src="https://cdn.bootcss.com/clipboard.js/1.7.1/clipboard.min.js"></script>
+</head>
+<body >
+	<!-- 复制插件 -->
+	<script>
+		var clipboard = new Clipboard('.btm');
+		clipboard.on('success', function(e) {
+				 e.clearSelection();	 
+		});
+		clipboard.on('error', function(e) {
+				warn("复制失败!");
+		});
+	</script>
+	<!-- 复制插件结束 -->
+	<div id="wrapper">
+		<div id="header-wrapper">
+			<div id="header">
+				<div id="logo">
+					<h1><a href="#">xiaozhu </a></h1>
+					<p> <a href="#" rel="nofollow">Have courage and be kind.</a></p>
+				</div>
+			</div>
+		</div>
+		<!--页头导航栏 -->
+		<div id="menu">
+			<ul>
+				<li class="current_page_item"><a href="ziyem.html">首页</a></li>
+				<li><a href="#">编程笔记</a></li>
+				<li><a href="#">快捷工具</a></li>
+				<li><a href="#">随笔</a></li>
+				<li><a href="#">相册</a></li>
+				<li><a href="#">未开发</a></li>
+			</ul>
+		</div>
+
+		<!-- 文章 -->
+		<div id="page">
+			<div id="page-bgtop">
+				<div id="page-bgbtm">
+					<div id="content">
+						<!-- 多余 -->
+						<!-- <div class="post">
+							<h2 class="title"><a href="#" id="post-title-link">缓存函数执行结果</a></h2>
+							<p class="meta">发表于&nbsp;<a href="#">2019年2月14日</a>
+								&nbsp;&bull;&nbsp; 评论&nbsp;<a href="#" class="comments">(64)</a>
+								&nbsp;&bull;&nbsp;分类&nbsp;<a href="#" class="permalink">vue</a></p>
+							<hr>
+							<div class="entry">
+								<p>框架中如何配置IP代理。
+									<div class="codebox">
+										<a href="javascript:;" class="btm" data-clipboard-target="#foo"><img
+												src="https://s2.ax1x.com/2019/12/23/l9Q4UO.png"></a>
+										<pre class="hljs"><code id="foo">案列
+#设置客户端连接服务器端的编码为utf8
+SET NAMES UTF8;
+#丢弃指定数据库
+DROP DATABASE IF EXISTS dang;
+#创建指定数据库，设置存储的编码为UTF8
+CREATE DATABASE dang CHARSET=UTF8;
+#进入创建的数据库
+USE dang;
+#创建保存数据的表
+CREATE TABLE book(
+bid INT,
+title VARCHAR(6),
+price VARCHAR(5)
+);
+#向表中插入数据
+INSERT INTO book VALUES('1','one','11');
+INSERT INTO book VALUES('2','two','22');
+INSERT INTO book VALUES('3','three','33');
+#删除指定行
+DELETE FROM book WHERE bid='1';
+#修改指定行内容
+UPDATE book SET price='14' WHERE bid='2';
+#查询语句
+SELECT * FROM book;	
+					
+</code></pre>
+									</div>
+								</p>
+							</div>
+
+							<div class="date">
+								<div class="date-month">12月</div>
+								<div class="date-day">24</div>
+							</div>
+						</div>
+
+						<div class="fudu"></div> -->
+						<!-- 多余 -->
+						<script>
+							function getList() {
+								//1.创建xhr异步对象
+								var strHTML = "";
+								var xhr = new XMLHttpRequest();
+								//4.创建监听,接收响应
+								xhr.onreadystatechange = function () {
+									if (xhr.readyState == 4 && xhr.status == 200) {
+										var result = xhr.responseText;
+										var arr = JSON.parse(result);
+										for (var i = 0; i < arr.length; i++) {
+											strHTML += `
+					<div class="post">
+						<h2 class="title"><a href="#" id="post-title-link">${arr[i].article_title}</a></h2>
+						<p class="meta">发表于&nbsp;<a href="#">${arr[i].article_date}</a>
+							&nbsp;&bull;&nbsp; 评论&nbsp;<a href="#" class="comments">${arr[i].article_like_count}</a> &nbsp;&bull;&nbsp;分类&nbsp;<a href="#" class="permalink">vue</a>
+						</p>
+						<hr>
+						<div class="entry">
+							<p>${arr[i].article_content}
+								<div class="codebox">
+									<a href="javascript:;" class="btm" data-clipboard-target="#foo">
+										<img src="https://s2.ax1x.com/2019/12/23/l9Q4UO.png">
+									</a>
+									<pre class="hljs"><code id="foo" class="foo">${arr[i].article_code}</code></pre>
+								</div>
+							</p>
+						</div>
+						<div class="date">
+							<div class="date-month">12月</div>
+							<div class="date-day">24</div>
+						</div>
+					</div>
+					<div class="fudu"></div>
+					`;
+										}
+										var content=document.getElementById("content");
+										content.innerHTML = strHTML;
+									}
+								}
+								//2.创建请求
+								xhr.open("get", "/pro/v1/zujian", true);
+								//3.发送请求
+								xhr.send();
+							}
+							getList();
+						</script>
+						 	
+					</div>
+					<!-- 右侧目录-->
+					<div id="sidebar">
+						<ul>
+							<li>
+								<h2>心灵毒汤</h2>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;你看到，然后你思考，于是你诞生。 我以为人生会比这个多，但是最后却什么都没有。</p>
+								<!--  无论怎么逃，我的过去总有一天会追上我。 那么多人，那么多平凡普通，百无聊赖的人，就这样，我淹没在人群中。 总是突然地开心，又突然间失去了所有兴致。 <br>&nbsp;&nbsp;&nbsp;再见我时，我一生已尽。 -->
+							</li>
+							<li>
+								<h2>目录</h2>
+								<ul>
+									<li><a href="#">Aliquam libero</a></li>
+									<li><a href="#">Consectetuer adipiscing elit</a></li>
+									<li><a href="#">Metus aliquam pellentesque</a></li>
+									<li><a href="#">Suspendisse iaculis mauris</a></li>
+									<li><a href="#">Urnanet non molestie semper</a></li>
+									<li><a href="#">Proin gravida orci porttitor</a></li>
+								</ul>
+							</li>
+							<li>
+								<h2>博客卷</h2>
+								<ul>
+									<li><a href="#">Aliquam libero</a></li>
+									<li><a href="#">Consectetuer adipiscing elit</a></li>
+									<li><a href="#">Metus aliquam pellentesque</a></li>
+									<li><a href="#">Suspendisse iaculis mauris</a></li>
+									<li><a href="#">Urnanet non molestie semper</a></li>
+									<li><a href="#">Proin gravida orci porttitor</a></li>
+								</ul>
+							</li>
+							<li>
+								<h2>有情链接</h2>
+								<ul>
+									<li><a href="https://www.myong.top/">Mr.Yong的博客</a></li>
+									<li><a href="http://www.zfowed.com/">何泽弘的博客</a></li>
+									<li><a href="https://h7ml.cn/">h7ml的博客</a></li>
+									<li><a href="https://diygod.me">不知名大佬的博客</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<!-- end #sidebar -->
+					<div style="clear: both;"></div>
+				</div>
+			</div>
+		</div>
+		<!-- end #page -->
+	</div>
+	<!-- end #footer -->
+	<div id="footer">
+		<p>Copyright (c) 2011 Sitename.com. All rights reserved. Design by <a href="#"
+				rel="nofollow">FreeCSSTemplates.org</a>.</p>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>XIAO ZHU'S BLOG</title>
+	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+
+<body>
+	<!-- 注册登录页面 不点击不展开-->
+	<div id="bg">
+		<div id="hint">
+			<!-- 提示框 -->
+			<p>登录失败</p>
+		</div>
+		<div id="login_wrap">
+			<!-- 右侧登录框 -->
+			<div id="login">
+				<!-- 登录注册切换动画 -->
+				<div id="status">
+					<i style="top: 0">登录</i>
+					<i style="top: 35px">注册</i>
+				</div>
+				<span>
+					<form action="post">
+						<p class="form"><input type="text" id="user" placeholder="用户名"></p>
+						<p class="form"><input type="password" id="passwd" placeholder="密码"></p>
+						<p class="form confirm"><input type="password" id="confirm-passwd" placeholder="确认密码"></p>
+						<input type="button" value="登录" class="btn" onclick="login()" style="margin-right: 20px;">
+						<input type="button" value="注册" class="btn" onclick='signin()' id="btn">
+					</form>
+					<a href="#">忘记密码?</a>
+				</span>
+			</div>
+			<!-- 左侧图片框 -->
+			<div id="login_img">
+				<p id="title">Hello world</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- 按钮判断，xhr -->
+	<script>
+		var onoff = true//根据此布尔值判断当前为注册状态还是登录状态
+		var confirm = document.getElementsByClassName("confirm")[0]
+
+		//引用hint()在最上方弹出提示
+		function hint() {
+			let hit = document.getElementById("hint")
+			hit.style.display = "block"
+			setTimeout("hit.style.opacity = 1", 0)
+			setTimeout("hit.style.opacity = 0", 2000)
+			setTimeout('hit.style.display = "none"', 3000)
+		}
+
+		//注册按钮
+		function signin() {
+			let status = document.getElementById("status").getElementsByTagName("i")
+			let hit = document.getElementById("hint").getElementsByTagName("p")[0]
+			if (onoff) {
+				confirm.style.height = 51 + "px"
+				status[0].style.top = 35 + "px"
+				status[1].style.top = 0
+				onoff = !onoff
+			} else {
+				console.log("注册内容")
+			}
+		}
+
+		//登录按钮
+		function login() {
+			if (onoff) {
+				let $uname = user.value;
+				let $upwd = passwd.value;
+				if (!$uname) {
+					alert("用户名不能为空")
+				}
+				if (!$upwd) {
+					alert("密码不能为空")
+				}
+				//1.创建xhr异步对象
+				var xhr = new XMLHttpRequest();
+				//4.创建监听,接收响应
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState == 4 && xhr.status == 200) {
+						var result = xhr.responseText;
+						if (result == 1) {
+							alert("登录成功");
+						} else {
+							alert("登录失败");
+						}
+					}
+				}
+				//2.创建请求
+				xhr.open("get", "/pro/v1/login/" + $uname + "&" + $upwd, true);
+				//3.发送请求
+				xhr.send();
+
+			} else {
+				let status = document.getElementById("status").getElementsByTagName("i")
+				confirm.style.height = 0
+				status[0].style.top = 0
+				status[1].style.top = 40 + "px"
+				onoff = !onoff
+			}
+		}
+
+		// 注册页面显示,判断show的display是不是none  是则设为block显示不是则设为none隐藏
+		function bgo() {
+			document.getElementById('bg').style.display = document.getElementById('bg').style.display == "none" ? "block" : "none";
+		}
+	</script>
+	<!-- 注册登录结束 -->
+	<style>
+	.entry>p {
+		word-break: break-all;
+    	text-overflow: ellipsis;
+    	display: -webkit-box;
+    	-webkit-box-orient: vertical;
+    	-webkit-line-clamp: 4;
+    	overflow: hidden;
+	}
+	</style>
+
+	<!-- 页面内容 -->
+	<div id="wrapper">
+		<div id="header-wrapper">
+			<div id="header">
+				<div id="logo">
+					<h1><a href="#" onclick="bgo()">xiaozhu </a></h1>
+					<p> <a href="#" rel="nofollow">Have courage and be kind.</a></p>
+				</div>
+			</div>
+		</div>
+		<!--页头导航栏 -->
+		<div id="menu">
+			<ul>
+				<li class="current_page_item"><a href="#">首页</a></li>
+				<li><a href="#">编程笔记</a></li>
+				<li><a href="#">快捷工具</a></li>
+				<li><a href="#">随笔</a></li>
+				<li><a href="#">相册</a></li>
+				<li><a href="#">未开发</a></li>
+			</ul>
+		</div>
+		<!-- 文章 -->
+		<div id="page">
+			<div id="page-bgtop">
+				<div id="page-bgbtm">
+					<div id="content">
+						<!-- 后台获取文章内容 -->
+						<script>
+							function getList() {
+								//1.创建xhr异步对象
+								var strHTML = "";
+								var xhr = new XMLHttpRequest();
+								//4.创建监听,接收响应
+								xhr.onreadystatechange = function () {
+									if (xhr.readyState == 4 && xhr.status == 200) {
+										var result = xhr.responseText;
+										var arr = JSON.parse(result);
+										for (var i = 0; i < arr.length; i++) {
+											strHTML += `
+					<div class="post">
+						<h2 class="title"><a href="#" id="post-title-link">${arr[i].article_title}</a></h2>
+						<p class="meta">发表于&nbsp;<a href="#">${arr[i].article_date}</a>
+							&nbsp;&bull;&nbsp; 评论&nbsp;<a href="#" class="comments">(${arr[i].article_like_count})</a> &nbsp;&bull;&nbsp;分类&nbsp;<a href="#" class="permalink">vue</a>
+						</p>
+						<hr>
+						<div class="entry">
+							<p>${arr[i].article_content}</p>
+						</div>
+						<div class="date">
+							<div class="date-month">12月</div>
+							<div class="date-day">24</div>
+						</div>
+					</div>
+					<div class="fudu"></div>
+					`;
+										}
+										var content=document.getElementById("content");
+										content.innerHTML = strHTML;
+										// var a=document.createElement("div")
+										// a.innerHTML=strHTML;
+										// content.appendChild(a);
+									}
+								}
+								//2.创建请求
+								xhr.open("get", "/pro/v1/zujian", true);
+								//3.发送请求
+								xhr.send();
+							}
+							getList();
+					
+						</script>
+						
+					</div>
+
+						<!-- ........ -->
+					</div>
+					<!-- 右侧目录-->
+					<div id="sidebar">
+						<ul>
+							<li>
+								<h2>心灵毒汤</h2>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;你看到，然后你思考，于是你诞生。 我以为人生会比这个多，但是最后却什么都没有。</p>
+								<!--  无论怎么逃，我的过去总有一天会追上我。 那么多人，那么多平凡普通，百无聊赖的人，就这样，我淹没在人群中。 总是突然地开心，又突然间失去了所有兴致。 <br>&nbsp;&nbsp;&nbsp;再见我时，我一生已尽。 -->
+							</li>
+							<li>
+								<h2>目录</h2>
+								<ul>
+									<li><a href="#">Aliquam libero</a></li>
+									<li><a href="#">Consectetuer adipiscing elit</a></li>
+									<li><a href="#">Metus aliquam pellentesque</a></li>
+									<li><a href="#">Suspendisse iaculis mauris</a></li>
+									<li><a href="#">Urnanet non molestie semper</a></li>
+									<li><a href="#">Proin gravida orci porttitor</a></li>
+								</ul>
+							</li>
+							<li>
+								<h2>博客卷</h2>
+								<ul>
+									<li><a href="#">Aliquam libero</a></li>
+									<li><a href="#">Consectetuer adipiscing elit</a></li>
+									<li><a href="#">Metus aliquam pellentesque</a></li>
+									<li><a href="#">Suspendisse iaculis mauris</a></li>
+									<li><a href="#">Urnanet non molestie semper</a></li>
+									<li><a href="#">Proin gravida orci porttitor</a></li>
+								</ul>
+							</li>
+							<li>
+								<h2>有情链接</h2>
+								<ul>
+									<li><a href="https://www.myong.top/">Mr.Yong的博客</a></li>
+									<li><a href="http://www.zfowed.com/">何泽弘的博客</a></li>
+									<li><a href="https://h7ml.cn/">h7ml的博客</a></li>
+									<li><a href="https://diygod.me">不知名大佬的博客</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<!-- end #sidebar -->
+					<div style="clear: both;"></div>
+				</div>
+			</div>
+		</div>
+		<!-- end #page -->
+	</div>
+	<div id="footer">
+		<p>Copyright (c) 2011 Sitename.com. All rights reserved. Design by <a href="#"
+				rel="nofollow">FreeCSSTemplates.org</a>.</p>
+	</div>
+	<!-- end #footer -->
+</body>
+
+</html>
